@@ -13,21 +13,21 @@ fn test_subtyping() {
             Hypothesis::ForAll(
                 logic_grammar::KindedVarIds(vec![]),
                 Box::new(Hypothesis::AtomicGoal(AtomicGoal::Predicate(
-                    logic_grammar::Predicate(ty_grammar::Predicate::WellFormed(
+                    ty_grammar::Predicate::WellFormed(
                         ty_grammar::ParameterKind::Ty,
                         ty_grammar::Parameter::Ty(Ty::VarId(ty_grammar::VarId("T".into()))),
-                    )),
+                    ),
                 ))),
             ),
             Hypothesis::ForAll(
                 logic_grammar::KindedVarIds(vec![]),
                 Box::new(Hypothesis::AtomicGoal(AtomicGoal::Predicate(
-                    logic_grammar::Predicate(ty_grammar::Predicate::Implemented(TraitRef(
+                    ty_grammar::Predicate::Implemented(TraitRef(
                         TraitId("AlwwaysImpl".into()),
                         ty_grammar::Parameters(vec![ty_grammar::Parameter::Ty(Ty::VarId(
                             ty_grammar::VarId("T".into()),
                         ))]),
-                    ))),
+                    )),
                 ))),
             ),
         ]),

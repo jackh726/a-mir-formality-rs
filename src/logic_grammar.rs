@@ -1,14 +1,8 @@
 #![allow(unused)]
 
-use crate::ty_grammar;
+use crate::ty_grammar::*;
 
 pub struct Hook;
-
-pub struct Parameter(pub ty_grammar::Parameter);
-pub struct ParameterKind(pub ty_grammar::ParameterKind);
-pub struct Predicate(pub ty_grammar::Predicate);
-pub struct VarInequality(pub ty_grammar::VarInequality);
-pub struct InequalityOp(pub ty_grammar::InequalityOp);
 
 pub struct Envs(pub Vec<Env>);
 pub struct Env(
