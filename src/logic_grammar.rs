@@ -26,7 +26,7 @@ pub struct VarBinder(VarId, ParameterKind, Quantifier, Universe);
 pub struct VarInequalities(pub Vec<VarInequality>);
 
 pub struct KindedVarIds(pub Vec<KindedVarId>);
-pub struct KindedVarId(Parameter, VarId);
+pub struct KindedVarId(pub Parameter, pub VarId);
 
 pub struct Parameters(pub Vec<Parameter>);
 
@@ -85,7 +85,6 @@ pub enum Quantifier {
 pub struct Universe(pub UniverseId, pub usize);
 
 pub struct VarIds(pub Vec<VarId>);
-pub struct VarId(pub String);
 pub struct AnyId(pub String);
 pub struct UniverseId(pub String);
 

@@ -11,7 +11,10 @@ fn test_subtyping() {
         VarInequalities(vec![]),
         Hypotheses(vec![
             Hypothesis::ForAll(
-                logic_grammar::KindedVarIds(vec![]),
+                logic_grammar::KindedVarIds(vec![KindedVarId(
+                    Parameter::Ty(Ty::VarId(VarId("T".into()))),
+                    VarId("T".into()),
+                )]),
                 Box::new(Hypothesis::AtomicGoal(AtomicGoal::Predicate(
                     ty_grammar::Predicate::WellFormed(
                         ty_grammar::ParameterKind::Ty,
@@ -20,7 +23,10 @@ fn test_subtyping() {
                 ))),
             ),
             Hypothesis::ForAll(
-                logic_grammar::KindedVarIds(vec![]),
+                logic_grammar::KindedVarIds(vec![KindedVarId(
+                    Parameter::Ty(Ty::VarId(VarId("T".into()))),
+                    VarId("T".into()),
+                )]),
                 Box::new(Hypothesis::AtomicGoal(AtomicGoal::Predicate(
                     ty_grammar::Predicate::Implemented(TraitRef(
                         TraitId("AlwwaysImpl".into()),
