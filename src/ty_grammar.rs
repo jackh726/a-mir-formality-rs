@@ -1,18 +1,15 @@
 #![allow(unused)]
 
-pub struct Schemes(Vec<Schemes>);
+pub struct Schemes(pub Vec<Schemes>);
 
 pub struct Scheme;
 
 pub enum ParameterKind {
-    TyKind(TyKind),
-    LtKind(LtKind),
+    Ty,
+    Lt,
 }
 
-pub struct TyKind;
-pub struct LtKind;
-
-pub struct Parameters(Vec<Parameter>);
+pub struct Parameters(pub Vec<Parameter>);
 pub enum Parameter {
     Ty(Ty),
     Lt(Lt),
@@ -33,7 +30,7 @@ pub enum PredicateSkeleton {
     Normalize(AliasName),
 }
 
-pub struct WhereClauses(Vec<WhereClause>);
+pub struct WhereClauses(pub Vec<WhereClause>);
 pub enum WhereClause {
     ForAll(KindedVarIds, Box<WhereClause>),
     Implemented(TraitRef),
@@ -41,12 +38,12 @@ pub enum WhereClause {
     Normalize(AliasTy, Ty),
 }
 
-pub struct Tys(Vec<Ty>);
+pub struct Tys(pub Vec<Ty>);
 pub enum Ty {
     RigidTy(RigidTy),
     AliasTy(AliasTy),
     PredicateTy(PredicateTy),
-    VaId(VarId),
+    VarId(VarId),
 }
 
 pub struct RigidTy(RigidName, Parameters);
@@ -76,25 +73,25 @@ pub struct ImplicationTy(WhereClauses, Box<Ty>);
 pub struct ExistsTy(KindedVarIds, Box<Ty>);
 pub struct EnsuresTy(Box<Ty>, WhereClauses);
 
-pub struct Abi(String);
+pub struct Abi(pub String);
 
 pub enum Lt {
     Static,
     VarId(VarId),
 }
 
-pub struct TraitRef(TraitId, Parameters);
-pub struct AssociatedTy(TraitId, AssociatedTyId);
+pub struct TraitRef(pub TraitId, pub Parameters);
+pub struct AssociatedTy(pub TraitId, pub AssociatedTyId);
 
 pub enum MaybeMut {
     Not,
     Mut,
 }
 
-pub struct VarIdPaids(Vec<VarIdPair>);
-pub struct VarIdPair(VarId, VarId);
+pub struct VarIdPaids(pub Vec<VarIdPair>);
+pub struct VarIdPair(pub VarId, pub VarId);
 
-pub struct VarInequality(VarId, InequalityOp, Parameters);
+pub struct VarInequality(pub VarId, pub InequalityOp, pub Parameters);
 
 pub enum InequalityOp {
     SubtypeOp(SubtypeOp),
@@ -125,17 +122,17 @@ pub enum ScalarId {
     Bool,
 }
 
-pub struct AdtId(String);
-pub struct AliasId(String);
-pub struct TraitId(String);
-pub struct AssociatedTyId(String);
-pub struct TyAliasId(String);
-pub struct VarId(String);
+pub struct AdtId(pub String);
+pub struct AliasId(pub String);
+pub struct TraitId(pub String);
+pub struct AssociatedTyId(pub String);
+pub struct TyAliasId(pub String);
+pub struct VarId(pub String);
 
 pub struct KindedVarIds;
 
 pub struct Generics(GenericParameters, WhereClauses);
-pub struct GenericParameters(Vec<GenericParameter>);
+pub struct GenericParameters(pub Vec<GenericParameter>);
 pub struct GenericParameter(VarId, KindAndVariance);
 pub struct KindAndVariance(ParameterKind, Variance);
 pub enum Variance {

@@ -1,35 +1,44 @@
 #![allow(unused)]
 
+use crate::ty_grammar;
+
 pub struct Hook;
 
-pub struct Parameter(Term);
-pub struct ParameterKind(Term);
-pub struct Predicate(Term);
-pub struct VarInequality(Term);
-pub struct InequalityOp(Term);
+pub struct Parameter(pub ty_grammar::Parameter);
+pub struct ParameterKind(pub ty_grammar::ParameterKind);
+pub struct Predicate(pub ty_grammar::Predicate);
+pub struct VarInequality(pub ty_grammar::VarInequality);
+pub struct InequalityOp(pub ty_grammar::InequalityOp);
 
-pub struct Envs(Vec<Env>);
-pub struct Env(Hook, Universe, VarBinders, Substitution, VarInequalities, Hypotheses);
+pub struct Envs(pub Vec<Env>);
+pub struct Env(
+    pub Hook,
+    pub Universe,
+    pub VarBinders,
+    pub Substitution,
+    pub VarInequalities,
+    pub Hypotheses,
+);
 
-pub struct Substitution(Vec<(VarId, Parameter)>);
+pub struct Substitution(pub Vec<(VarId, Parameter)>);
 pub enum SubstitutionOrError {
     Substitution(Substitution),
     Error(Error),
 }
 
-pub struct VarBinders(Vec<VarBinder>);
+pub struct VarBinders(pub Vec<VarBinder>);
 pub struct VarBinder(VarId, ParameterKind, Quantifier, Universe);
 
-pub struct VarInequalities(Vec<VarInequality>);
+pub struct VarInequalities(pub Vec<VarInequality>);
 
-pub struct KindedVarIds(Vec<KindedVarId>);
+pub struct KindedVarIds(pub Vec<KindedVarId>);
 pub struct KindedVarId(Parameter, VarId);
 
-pub struct Parameters(Vec<Parameter>);
+pub struct Parameters(pub Vec<Parameter>);
 
-pub struct Predicates(Vec<Predicate>);
+pub struct Predicates(pub Vec<Predicate>);
 
-pub struct Goals(Vec<Goal>);
+pub struct Goals(pub Vec<Goal>);
 pub enum Goal {
     AtomicGoal(AtomicGoal),
     BuiltinGoal(BuiltinGoal),
@@ -46,8 +55,8 @@ pub enum BuiltinGoal {
     Quantified(Quantifier, KindedVarIds, Box<Goal>),
 }
 
-pub struct Hypotheses(Vec<Hypothesis>);
-pub struct Clauses(Vec<Clause>);
+pub struct Hypotheses(pub Vec<Hypothesis>);
+pub struct Clauses(pub Vec<Clause>);
 pub enum Hypothesis {
     AtomicGoal(AtomicGoal),
     Implies(Goals, AtomicGoal),
@@ -59,15 +68,15 @@ pub enum Clause {
     ForAll(KindedVarIds, Box<Clause>),
 }
 
-pub struct FlatHypotheses(Vec<FlatHypothesis>);
+pub struct FlatHypotheses(pub Vec<FlatHypothesis>);
 pub struct FlatHypothesis(KindedVarIds, FlatImplicationHypothesis); // ForAll
-pub struct FlatImplicationHypotheses(Vec<FlatImplicationHypothesis>);
+pub struct FlatImplicationHypotheses(pub Vec<FlatImplicationHypothesis>);
 pub struct FlatImplicationHypothesis(Goals, AtomicGoal); // Implies
 
-pub struct Invariants(Vec<Invariant>);
+pub struct Invariants(pub Vec<Invariant>);
 pub struct Invariant(KindedVarIds, Predicate, Predicate); // ForAll KindedVarIds (Implies (Predicate) Predicate))
 
-pub struct Relations(Vec<Relation>);
+pub struct Relations(pub Vec<Relation>);
 pub struct Relation(Parameter, RelationOp, Parameter);
 pub enum RelationOp {
     Equals,
@@ -79,19 +88,19 @@ pub enum Quantifier {
     Exists,
 }
 
-pub struct Universe(UniverseId, usize);
+pub struct Universe(pub UniverseId, pub usize);
 
-pub struct VarIds(Vec<VarId>);
-pub struct VarId(String);
-pub struct AnyId(String);
-pub struct UniverseId(String);
+pub struct VarIds(pub Vec<VarId>);
+pub struct VarId(pub String);
+pub struct AnyId(pub String);
+pub struct UniverseId(pub String);
 
-pub struct Error(String);
+pub struct Error(pub String);
 
-pub struct Terms(Vec<Term>);
-pub struct Term(String);
+pub struct Terms(pub Vec<Term>);
+pub struct Term(pub String);
 pub struct TermPair(Term, Term);
-pub struct TermPairs(Vec<TermPair>);
+pub struct TermPairs(pub Vec<TermPair>);
 
 pub struct ProveStacks(Predicates, Predicates);
 pub enum ProveCoinductive {
@@ -99,4 +108,4 @@ pub enum ProveCoinductive {
     Less,
 }
 
-//pub const ROOT_UNIVERSE: Universe = Universe(UniverseId(String::from("root")), 0);
+//pub const ROOT_UNIVERSE: Universe = Universe(UniverseId(pub String::from("root")), 0);
