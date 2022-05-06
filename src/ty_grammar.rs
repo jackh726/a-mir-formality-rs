@@ -1,57 +1,57 @@
 #![allow(unused)]
 
-struct Schemes(Vec<Schemes>);
+pub struct Schemes(Vec<Schemes>);
 
-struct Scheme;
+pub struct Scheme;
 
-enum ParameterKind {
+pub enum ParameterKind {
     TyKind(TyKind),
     LtKind(LtKind),
 }
 
-struct TyKind;
-struct LtKind;
+pub struct TyKind;
+pub struct LtKind;
 
-struct Parameters(Vec<Parameter>);
-enum Parameter {
+pub struct Parameters(Vec<Parameter>);
+pub enum Parameter {
     Ty(Ty),
     Lt(Lt),
 }
 
-enum Predicate {
+pub enum Predicate {
     Implemented(TraitRef),
     HasImpl(TraitRef),
     WellFormed(ParameterKind, Parameter),
     Normalize(AliasTy, Ty),
 }
 
-struct PredicateDeboned(PredicateSkeleton, Parameters);
-enum PredicateSkeleton {
+pub struct PredicateDeboned(PredicateSkeleton, Parameters);
+pub enum PredicateSkeleton {
     Implemented(TraitId),
     HasImpl(TraitId),
     WellFormed(ParameterKind),
     Normalize(AliasName),
 }
 
-struct WhereClauses(Vec<WhereClause>);
-enum WhereClause {
+pub struct WhereClauses(Vec<WhereClause>);
+pub enum WhereClause {
     ForAll(KindedVarIds, Box<WhereClause>),
     Implemented(TraitRef),
     Outlives(Parameter, Lt),
     Normalize(AliasTy, Ty),
 }
 
-struct Tys(Vec<Ty>);
-enum Ty {
+pub struct Tys(Vec<Ty>);
+pub enum Ty {
     RigidTy(RigidTy),
     AliasTy(AliasTy),
     PredicateTy(PredicateTy),
     VaId(VarId),
 }
 
-struct RigidTy(RigidName, Parameters);
+pub struct RigidTy(RigidName, Parameters);
 
-enum RigidName {
+pub enum RigidName {
     AdtId(AdtId),
     ScalarId(ScalarId),
     Ref(MaybeMut),
@@ -59,59 +59,59 @@ enum RigidName {
     Fn(Abi, usize),
 }
 
-struct AliasTy(AliasName, Parameters);
-enum AliasName {
+pub struct AliasTy(AliasName, Parameters);
+pub enum AliasName {
     AliasId(AliasId),
     TraitId(AssociatedTyId),
 }
 
-enum PredicateTy {
+pub enum PredicateTy {
     ForAllTy(ForAllTy),
     ExistsTy(ExistsTy),
     ImplicationTy(ImplicationTy),
     EnsuresTy(EnsuresTy),
 }
-struct ForAllTy(KindedVarIds, Box<Ty>);
-struct ImplicationTy(WhereClauses, Box<Ty>);
-struct ExistsTy(KindedVarIds, Box<Ty>);
-struct EnsuresTy(Box<Ty>, WhereClauses);
+pub struct ForAllTy(KindedVarIds, Box<Ty>);
+pub struct ImplicationTy(WhereClauses, Box<Ty>);
+pub struct ExistsTy(KindedVarIds, Box<Ty>);
+pub struct EnsuresTy(Box<Ty>, WhereClauses);
 
-struct Abi(String);
+pub struct Abi(String);
 
-enum Lt {
+pub enum Lt {
     Static,
     VarId(VarId),
 }
 
-struct TraitRef(TraitId, Parameters);
-struct AssociatedTy(TraitId, AssociatedTyId);
+pub struct TraitRef(TraitId, Parameters);
+pub struct AssociatedTy(TraitId, AssociatedTyId);
 
-enum MaybeMut {
+pub enum MaybeMut {
     Not,
     Mut,
 }
 
-struct VarIdPaids(Vec<VarIdPair>);
-struct VarIdPair(VarId, VarId);
+pub struct VarIdPaids(Vec<VarIdPair>);
+pub struct VarIdPair(VarId, VarId);
 
-struct VarInequality(VarId, InequalityOp, Parameters);
+pub struct VarInequality(VarId, InequalityOp, Parameters);
 
-enum InequalityOp {
+pub enum InequalityOp {
     SubtypeOp(SubtypeOp),
     OutlivesOp(OutlivesOp),
 }
 
-enum SubtypeOp {
+pub enum SubtypeOp {
     Subset,
     Superset,
 }
 
-enum OutlivesOp {
+pub enum OutlivesOp {
     Outlives,
     OutlivedBy,
 }
 
-enum ScalarId {
+pub enum ScalarId {
     I8,
     U8,
     I16,
@@ -125,20 +125,20 @@ enum ScalarId {
     Bool,
 }
 
-struct AdtId(String);
-struct AliasId(String);
-struct TraitId(String);
-struct AssociatedTyId(String);
-struct TyAliasId(String);
-struct VarId(String);
+pub struct AdtId(String);
+pub struct AliasId(String);
+pub struct TraitId(String);
+pub struct AssociatedTyId(String);
+pub struct TyAliasId(String);
+pub struct VarId(String);
 
-struct KindedVarIds;
+pub struct KindedVarIds;
 
-struct Generics(GenericParameters, WhereClauses);
-struct GenericParameters(Vec<GenericParameter>);
-struct GenericParameter(VarId, KindAndVariance);
-struct KindAndVariance(ParameterKind, Variance);
-enum Variance {
+pub struct Generics(GenericParameters, WhereClauses);
+pub struct GenericParameters(Vec<GenericParameter>);
+pub struct GenericParameter(VarId, KindAndVariance);
+pub struct KindAndVariance(ParameterKind, Variance);
+pub enum Variance {
     Less,
     More,
     Equal,
