@@ -11,7 +11,7 @@ fn test_subtyping() {
         VarInequalities(vec![]),
         Hypotheses(vec![
             Hypothesis::ForAll(
-                logic_grammar::KindedVarIds(vec![KindedVarId(
+                ty_grammar::KindedVarIds(vec![KindedVarId(
                     Parameter::Ty(Ty::VarId(VarId("T".into()))),
                     VarId("T".into()),
                 )]),
@@ -23,7 +23,7 @@ fn test_subtyping() {
                 ))),
             ),
             Hypothesis::ForAll(
-                logic_grammar::KindedVarIds(vec![KindedVarId(
+                ty_grammar::KindedVarIds(vec![KindedVarId(
                     Parameter::Ty(Ty::VarId(VarId("T".into()))),
                     VarId("T".into()),
                 )]),
@@ -38,4 +38,15 @@ fn test_subtyping() {
             ),
         ]),
     );
+
+    let goal: Goal = Goal::AtomicGoal(AtomicGoal::Relation(
+        Relation(
+            Parameter::Ty(Ty::PredicateTy(PredicateTy::ForAllTy(ForAllTy(ty_grammar::KindedVarIds(vec![ty_grammar::KindedVarId(
+                ty_grammar::Parameter::Ty(Ty::VarId(VarId("T".into()))),
+                VarId("T".into()),
+            )]), Box::new(Ty::VarId(VarId("T".into()))))))),
+            RelationOp::InequalityOp(InequalityOp::SubtypeOp(SubtypeOp::Subset)),
+            Parameter::Ty(Ty::RigidTy(RigidTy(RigidName::ScalarId(ScalarId::U32), ty_grammar::Parameters(vec![])))),
+        ),
+    ));
 }

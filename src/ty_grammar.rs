@@ -46,7 +46,7 @@ pub enum Ty {
     VarId(VarId),
 }
 
-pub struct RigidTy(RigidName, Parameters);
+pub struct RigidTy(pub RigidName, pub Parameters);
 
 pub enum RigidName {
     AdtId(AdtId),
@@ -68,7 +68,7 @@ pub enum PredicateTy {
     ImplicationTy(ImplicationTy),
     EnsuresTy(EnsuresTy),
 }
-pub struct ForAllTy(KindedVarIds, Box<Ty>);
+pub struct ForAllTy(pub KindedVarIds, pub Box<Ty>);
 pub struct ImplicationTy(WhereClauses, Box<Ty>);
 pub struct ExistsTy(KindedVarIds, Box<Ty>);
 pub struct EnsuresTy(Box<Ty>, WhereClauses);
@@ -129,7 +129,8 @@ pub struct AssociatedTyId(pub String);
 pub struct TyAliasId(pub String);
 pub struct VarId(pub String);
 
-pub struct KindedVarIds;
+pub struct KindedVarIds(pub Vec<KindedVarId>);
+pub struct KindedVarId(pub Parameter, pub VarId);
 
 pub struct Generics(GenericParameters, WhereClauses);
 pub struct GenericParameters(pub Vec<GenericParameter>);

@@ -25,9 +25,6 @@ pub struct VarBinder(VarId, ParameterKind, Quantifier, Universe);
 
 pub struct VarInequalities(pub Vec<VarInequality>);
 
-pub struct KindedVarIds(pub Vec<KindedVarId>);
-pub struct KindedVarId(pub Parameter, pub VarId);
-
 pub struct Parameters(pub Vec<Parameter>);
 
 pub struct Predicates(pub Vec<Predicate>);
@@ -71,7 +68,7 @@ pub struct Invariants(pub Vec<Invariant>);
 pub struct Invariant(KindedVarIds, Predicate, Predicate); // ForAll KindedVarIds (Implies (Predicate) Predicate))
 
 pub struct Relations(pub Vec<Relation>);
-pub struct Relation(Parameter, RelationOp, Parameter);
+pub struct Relation(pub Parameter, pub RelationOp, pub Parameter);
 pub enum RelationOp {
     Equals,
     InequalityOp(InequalityOp),
