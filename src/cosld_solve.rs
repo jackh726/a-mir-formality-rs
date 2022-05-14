@@ -8,7 +8,14 @@ pub fn prove(env: Env, prove_stacks: ProveStacks, goal: Goal) -> Option<Env> {
         Goal::AtomicGoal(AtomicGoal::Predicate(predicate)) => todo!(),
         Goal::AtomicGoal(AtomicGoal::Relation(relation)) => todo!(),
         Goal::BuiltinGoal(BuiltinGoal::All(goals)) => prove_all(env, prove_stacks, *goals),
-        Goal::BuiltinGoal(BuiltinGoal::Any(goals)) => todo!(),
+        Goal::BuiltinGoal(BuiltinGoal::Any(goals)) => {
+            for goal in goals.0 {
+                if let Some(env) = prove(env.clone(), prove_stacks.clone(), goal) {
+                    return Some(env);
+                }
+            }
+            None
+        }
         Goal::BuiltinGoal(BuiltinGoal::Implies(hypotheses, goal)) => {
             let env_1 = utils::env_with_hypotheses(env.clone(), hypotheses);
             let env_out = prove(env_1, prove_stacks, *goal)?;
