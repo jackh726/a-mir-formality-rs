@@ -1,1 +1,1 @@
-mod ty_test_subtyping;
+pub(crate) mod ty_test_subtyping;

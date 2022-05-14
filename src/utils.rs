@@ -1,7 +1,6 @@
 use crate::ty_grammar::*;
 use crate::logic_grammar::*;
 
-// prove-exists
 fn not_in_stacks(env: Env, predicate: Predicate, prove_stacks: ProveStacks) -> bool {
     for pred in prove_stacks.0.0.iter() {
         if predicate == *pred {
@@ -14,4 +13,18 @@ fn not_in_stacks(env: Env, predicate: Predicate, prove_stacks: ProveStacks) -> b
         }
     }
     return true;
+}
+
+pub fn apply_substitution_from_env<T: Subst>(env: Env, term: T) -> T {
+    let substitution = env.3;
+    apply_substitution(substitution, term)
+}
+
+pub fn apply_substitution<T: Subst>(substitution: Substitution, term: T) -> T {
+    // Case 1
+    if substitution.0.is_empty() {
+        return term;
+    }
+    // Case 2
+    term.subst(substitution)
 }

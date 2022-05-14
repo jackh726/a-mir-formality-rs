@@ -1,7 +1,8 @@
 use crate::logic_grammar::{self, *};
 use crate::ty_grammar::{self, *};
+use crate::cosld_solve;
 
-fn test_subtyping() {
+pub fn test_subtyping() {
     let root_univsere = Universe(UniverseId(String::from("root")), 0);
     let env: Env = Env(
         Hook,
@@ -49,4 +50,6 @@ fn test_subtyping() {
             Parameter::Ty(Ty::RigidTy(RigidTy(RigidName::ScalarId(ScalarId::U32), ty_grammar::Parameters(vec![])))),
         ),
     ));
+
+    cosld_solve::prove(env, ProveStacks(Predicates(vec![]), Predicates(vec![])), goal);
 }
