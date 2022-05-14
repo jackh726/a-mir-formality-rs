@@ -92,7 +92,7 @@ pub struct Term(pub String);
 pub struct TermPair(Term, Term);
 pub struct TermPairs(pub Vec<TermPair>);
 
-pub struct ProveStacks(Predicates, Predicates);
+pub struct ProveStacks(pub  Predicates, pub Predicates);
 pub enum ProveCoinductive {
     More,
     Less,
