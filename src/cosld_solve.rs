@@ -11,9 +11,10 @@ pub fn prove(env: Env, prove_stacks: ProveStacks, goal: Goal) -> Option<Env> {
         Goal::BuiltinGoal(BuiltinGoal::Any(goals)) => todo!(),
         Goal::BuiltinGoal(BuiltinGoal::Implies(hypotheses, goal)) => todo!(),
         Goal::BuiltinGoal(BuiltinGoal::Quantified(quantifier, kinded_var_ids, goal)) => {
-            let (env, goal, varids_new) =
-                instantiate::instantiate_qualified(env, quantifier, kinded_var_ids, *goal);
-            prove(env, prove_stacks, goal)
+            let (env_1, goal_1, varids_new) =
+                instantiate::instantiate_qualified(env.clone(), quantifier, kinded_var_ids, *goal);
+            let env_out = prove(env_1, prove_stacks, goal_1)?;
+            Some(utils::reset(env, varids_new, env_out))
         }
     }
 }
