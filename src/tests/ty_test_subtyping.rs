@@ -1,6 +1,6 @@
+use crate::cosld_solve;
 use crate::logic_grammar::{self, *};
 use crate::ty_grammar::{self, *};
-use crate::cosld_solve;
 
 pub fn test_subtyping() {
     let root_univsere = Universe(UniverseId(String::from("root")), 0);
@@ -40,16 +40,24 @@ pub fn test_subtyping() {
         ]),
     );
 
-    let goal: Goal = Goal::AtomicGoal(AtomicGoal::Relation(
-        Relation(
-            Parameter::Ty(Ty::PredicateTy(PredicateTy::ForAllTy(ForAllTy(ty_grammar::KindedVarIds(vec![ty_grammar::KindedVarId(
+    let goal: Goal = Goal::AtomicGoal(AtomicGoal::Relation(Relation(
+        Parameter::Ty(Ty::PredicateTy(PredicateTy::ForAllTy(ForAllTy(
+            ty_grammar::KindedVarIds(vec![ty_grammar::KindedVarId(
                 ty_grammar::Parameter::Ty(Ty::VarId(VarId("T".into()))),
                 VarId("T".into()),
-            )]), Box::new(Ty::VarId(VarId("T".into()))))))),
-            RelationOp::InequalityOp(InequalityOp::SubtypeOp(SubtypeOp::Subset)),
-            Parameter::Ty(Ty::RigidTy(RigidTy(RigidName::ScalarId(ScalarId::U32), ty_grammar::Parameters(vec![])))),
-        ),
-    ));
+            )]),
+            Box::new(Ty::VarId(VarId("T".into()))),
+        )))),
+        RelationOp::InequalityOp(InequalityOp::SubtypeOp(SubtypeOp::Subset)),
+        Parameter::Ty(Ty::RigidTy(RigidTy(
+            RigidName::ScalarId(ScalarId::U32),
+            ty_grammar::Parameters(vec![]),
+        ))),
+    )));
 
-    cosld_solve::prove(env, ProveStacks(Predicates(vec![]), Predicates(vec![])), goal);
+    cosld_solve::prove(
+        env,
+        ProveStacks(Predicates(vec![]), Predicates(vec![])),
+        goal,
+    );
 }

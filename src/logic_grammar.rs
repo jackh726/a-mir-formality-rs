@@ -114,7 +114,7 @@ pub struct TermPair(Term, Term);
 pub struct TermPairs(pub Vec<TermPair>);
 
 #[derive(Clone, PartialEq, Eq)]
-pub struct ProveStacks(pub  Predicates, pub Predicates);
+pub struct ProveStacks(pub Predicates, pub Predicates);
 pub enum ProveCoinductive {
     More,
     Less,
@@ -176,10 +176,6 @@ impl<T: Subst> Subst for Vec<T> {
 
 impl<T: Subst, U: Subst> Subst for (T, U) {
     fn subst(self, subst: Substitution) -> Self {
-        (
-            self.0.subst(subst.clone()),
-            self.1.subst(subst),
-        )
+        (self.0.subst(subst.clone()), self.1.subst(subst))
     }
-
 }
