@@ -3,7 +3,19 @@ use crate::logic_grammar::*;
 use crate::utils;
 
 pub fn prove(env: Env, prove_stacks: ProveStacks, goal: Goal) -> Option<Env> {
-    todo!()
+    match goal {
+        Goal::AtomicGoal(AtomicGoal::Predicate(predicate)) => todo!(),
+        Goal::AtomicGoal(AtomicGoal::Relation(relation)) => todo!(),
+        Goal::BuiltinGoal(BuiltinGoal::All(goals)) => {
+            prove_all(env, prove_stacks, *goals)
+        }
+        Goal::BuiltinGoal(BuiltinGoal::Any(goals)) => todo!(),
+        Goal::BuiltinGoal(BuiltinGoal::Implies(hypotheses, goal)) => todo!(),
+        Goal::BuiltinGoal(BuiltinGoal::Quantified(Quantifier::ForAll, kinded_var_ids, goal)) => todo!(),
+        Goal::BuiltinGoal(BuiltinGoal::Quantified(Quantifier::Exists, kinded_var_ids, goal)) => {
+            todo!()
+        }
+    }
 }
 
 pub fn clause_proves_by_clause_fact(env: Env, prove_stacks: ProveStacks, prove_coinductive: ProveCoinductive, clause: Clause) -> Option<Env> {

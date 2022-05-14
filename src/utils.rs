@@ -28,3 +28,22 @@ pub fn apply_substitution<T: Subst>(substitution: Substitution, term: T) -> T {
     // Case 2
     term.subst(substitution)
 }
+
+pub fn reset(env_old: Env, var_ids: VarIds, env_new: Env) -> Env {
+    let Env(hook_old, universe_old, _, _, _, hypotheses_old) = env_old;
+    let Env(hook_new, _, var_binders_new, substitution_new, var_inequalities_new, _) = env_new;
+
+    Env(hook_new, universe_old, var_binders_new, substitution_new, var_inequalities_new, hypotheses_old)
+}
+
+pub fn substitution_to_fresh_vars<T: Subst>(term: T, kinded_var_ids: KindedVarIds) -> VarIdPairs {
+    todo!()
+}
+
+pub fn env_with_incremented_universe(env: Env) -> Env {
+    todo!()
+}
+
+pub fn env_with_vars_in_current_universe(env: Env, quantifier: Quantifier, kinded_var_ids: KindedVarIds) -> Env {
+    todo!()
+}

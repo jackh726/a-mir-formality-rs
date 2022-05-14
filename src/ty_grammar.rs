@@ -108,7 +108,9 @@ pub enum MaybeMut {
     Mut,
 }
 
-pub struct VarIdPaids(pub Vec<VarIdPair>);
+#[derive(Clone, PartialEq, Eq)]
+pub struct VarIdPairs(pub Vec<VarIdPair>);
+#[derive(Clone, PartialEq, Eq)]
 pub struct VarIdPair(pub VarId, pub VarId);
 
 #[derive(Clone, PartialEq, Eq)]

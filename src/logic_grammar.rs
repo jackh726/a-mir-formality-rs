@@ -100,6 +100,7 @@ pub enum Quantifier {
 #[derive(Clone, PartialEq, Eq)]
 pub struct Universe(pub UniverseId, pub usize);
 
+#[derive(Clone, PartialEq, Eq)]
 pub struct VarIds(pub Vec<VarId>);
 pub struct AnyId(pub String);
 #[derive(Clone, PartialEq, Eq)]
@@ -161,11 +162,24 @@ impl Subst for ProveStacks {
     }
 }
 
-impl Subst for (Vec<Goal>, ProveStacks) {
+impl Subst for Env {
+    fn subst(self, subst: Substitution) -> Self {
+        todo!()
+    }
+}
+
+impl<T: Subst> Subst for Vec<T> {
+    fn subst(self, subst: Substitution) -> Self {
+        self.into_iter().map(|t| t.subst(subst.clone())).collect()
+    }
+}
+
+impl<T: Subst, U: Subst> Subst for (T, U) {
     fn subst(self, subst: Substitution) -> Self {
         (
-            self.0.into_iter().map(|g| g.subst(subst.clone())).collect(),
+            self.0.subst(subst.clone()),
             self.1.subst(subst),
         )
     }
+
 }
