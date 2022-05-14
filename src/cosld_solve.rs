@@ -9,7 +9,11 @@ pub fn prove(env: Env, prove_stacks: ProveStacks, goal: Goal) -> Option<Env> {
         Goal::AtomicGoal(AtomicGoal::Relation(relation)) => todo!(),
         Goal::BuiltinGoal(BuiltinGoal::All(goals)) => prove_all(env, prove_stacks, *goals),
         Goal::BuiltinGoal(BuiltinGoal::Any(goals)) => todo!(),
-        Goal::BuiltinGoal(BuiltinGoal::Implies(hypotheses, goal)) => todo!(),
+        Goal::BuiltinGoal(BuiltinGoal::Implies(hypotheses, goal)) => {
+            let env_1 = utils::env_with_hypotheses(env.clone(), hypotheses);
+            let env_out = prove(env_1, prove_stacks, *goal)?;
+            Some(utils::reset(env, VarIds(vec![]), env_out))
+        }
         Goal::BuiltinGoal(BuiltinGoal::Quantified(quantifier, kinded_var_ids, goal)) => {
             let (env_1, goal_1, varids_new) =
                 instantiate::instantiate_qualified(env.clone(), quantifier, kinded_var_ids, *goal);

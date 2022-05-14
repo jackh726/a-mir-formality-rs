@@ -58,3 +58,7 @@ pub fn env_with_vars_in_current_universe(
 ) -> Env {
     todo!()
 }
+
+pub fn env_with_hypotheses(env: Env, hypotheses: Hypotheses) -> Env {
+    todo!()
+}
