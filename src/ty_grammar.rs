@@ -66,7 +66,7 @@ pub enum RigidName {
 }
 
 #[derive(Clone, PartialEq, Eq)]
-pub struct AliasTy(AliasName, Parameters);
+pub struct AliasTy(pub AliasName, pub Parameters);
 #[derive(Clone, PartialEq, Eq)]
 pub enum AliasName {
     AliasId(AliasId),
@@ -83,11 +83,11 @@ pub enum PredicateTy {
 #[derive(Clone, PartialEq, Eq)]
 pub struct ForAllTy(pub KindedVarIds, pub Box<Ty>);
 #[derive(Clone, PartialEq, Eq)]
-pub struct ImplicationTy(WhereClauses, Box<Ty>);
+pub struct ImplicationTy(pub WhereClauses, pub Box<Ty>);
 #[derive(Clone, PartialEq, Eq)]
 pub struct ExistsTy(KindedVarIds, Box<Ty>);
 #[derive(Clone, PartialEq, Eq)]
-pub struct EnsuresTy(Box<Ty>, WhereClauses);
+pub struct EnsuresTy(pub Box<Ty>, pub WhereClauses);
 
 #[derive(Clone, PartialEq, Eq)]
 pub struct Abi(pub String);

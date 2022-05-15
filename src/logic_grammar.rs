@@ -31,8 +31,6 @@ pub struct VarBinder(VarId, ParameterKind, Quantifier, Universe);
 #[derive(Clone, PartialEq, Eq)]
 pub struct VarInequalities(pub Vec<VarInequality>);
 
-pub struct Parameters(pub Vec<Parameter>);
-
 #[derive(Clone, PartialEq, Eq)]
 pub struct Predicates(pub Vec<Predicate>);
 
