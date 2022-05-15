@@ -26,7 +26,7 @@ pub enum SubstitutionOrError {
 #[derive(Clone, PartialEq, Eq)]
 pub struct VarBinders(pub Vec<VarBinder>);
 #[derive(Clone, PartialEq, Eq)]
-pub struct VarBinder(VarId, ParameterKind, Quantifier, Universe);
+pub struct VarBinder(pub VarId, pub ParameterKind, pub Quantifier, pub Universe);
 
 #[derive(Clone, PartialEq, Eq)]
 pub struct VarInequalities(pub Vec<VarInequality>);

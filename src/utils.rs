@@ -64,7 +64,14 @@ pub fn env_with_hypotheses(env: Env, hypotheses: Hypotheses) -> Env {
 }
 
 pub fn env_contains_existential_var(env: Env, var_id: VarId) -> bool {
-    todo!()
+    for binder in env.2.0 {
+        let bound_var_id = binder.0;
+        let bound_quantifier = binder.2;
+        if bound_var_id == var_id && matches!(bound_quantifier, Quantifier::Exists) {
+            return true;
+        }
+    }
+    return false;
 }
 
 pub fn relate_parameters(env: Env, relation: Relation) -> (Env, Goals) {
