@@ -62,3 +62,40 @@ pub fn env_with_vars_in_current_universe(
 pub fn env_with_hypotheses(env: Env, hypotheses: Hypotheses) -> Env {
     todo!()
 }
+
+pub fn relate_parameters(env: Env, relation: Relation) -> (Env, Goals) {
+    let relation = apply_substitution_from_env(env.clone(), relation);
+    match relation.1 {
+        RelationOp::Equals => equate_one_substituted(env, relation.0, relation.2),
+        RelationOp::InequalityOp(InequalityOp::SubtypeOp(subtype_op)) => {
+            compare_one_substituted(env, relation.0, relation.2)
+        }
+        RelationOp::InequalityOp(InequalityOp::OutlivesOp(outlives_op)) => {
+            outlives_one_substituted(env, relation.0, relation.2)
+        }
+    }
+}
+
+pub fn equate_one_substituted(
+    env: Env,
+    parameter_1: Parameter,
+    parameter_2: Parameter,
+) -> (Env, Goals) {
+    todo!()
+}
+
+pub fn compare_one_substituted(
+    env: Env,
+    parameter_1: Parameter,
+    parameter_2: Parameter,
+) -> (Env, Goals) {
+    todo!()
+}
+
+pub fn outlives_one_substituted(
+    env: Env,
+    parameter_1: Parameter,
+    parameter_2: Parameter,
+) -> (Env, Goals) {
+    todo!()
+}

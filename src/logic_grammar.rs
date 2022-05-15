@@ -168,6 +168,12 @@ impl Subst for Env {
     }
 }
 
+impl Subst for Relation {
+    fn subst(self, subst: Substitution) -> Self {
+        todo!()
+    }
+}
+
 impl<T: Subst> Subst for Vec<T> {
     fn subst(self, subst: Substitution) -> Self {
         self.into_iter().map(|t| t.subst(subst.clone())).collect()

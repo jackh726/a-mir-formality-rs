@@ -6,7 +6,10 @@ use crate::utils;
 pub fn prove(env: Env, prove_stacks: ProveStacks, goal: Goal) -> Option<Env> {
     match goal {
         Goal::AtomicGoal(AtomicGoal::Predicate(predicate)) => todo!(),
-        Goal::AtomicGoal(AtomicGoal::Relation(relation)) => todo!(),
+        Goal::AtomicGoal(AtomicGoal::Relation(relation)) => {
+            let (env_eq, goals_eq) = utils::relate_parameters(env, relation);
+            prove_all(env_eq, prove_stacks, goals_eq)
+        }
         Goal::BuiltinGoal(BuiltinGoal::All(goals)) => prove_all(env, prove_stacks, *goals),
         Goal::BuiltinGoal(BuiltinGoal::Any(goals)) => {
             for goal in goals.0 {
