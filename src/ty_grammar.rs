@@ -128,6 +128,15 @@ pub enum SubtypeOp {
     Superset,
 }
 
+impl SubtypeOp {
+    pub fn invert(self) -> Self {
+        match self {
+            Self::Subset => Self::Superset,
+            Self::Superset => Self::Subset,
+        }
+    }
+}
+
 #[derive(Clone, PartialEq, Eq)]
 pub enum OutlivesOp {
     Outlives,

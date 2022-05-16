@@ -171,15 +171,15 @@ fn compare_one_substituted_tys(
     }
 
     match (ty_1, subtype_op, ty_2) {
-        (Ty::VarId(var_id), _, Ty::RigidTy(RigidTy(rigid_name, parameters)))
+        (Ty::VarId(var_id), subtype_op, Ty::RigidTy(RigidTy(rigid_name, parameters)))
             if env_contains_existential_var(env.clone(), var_id.clone()) =>
         {
-            todo!()
+            relate_var_to_rigid(env, var_id, RelationOp::InequalityOp(InequalityOp::SubtypeOp(subtype_op)), rigid_name, parameters)
         }
-        (Ty::RigidTy(RigidTy(rigid_name, parameters)), _, Ty::VarId(var_id))
+        (Ty::RigidTy(RigidTy(rigid_name, parameters)), subtype_op, Ty::VarId(var_id))
             if env_contains_existential_var(env.clone(), var_id.clone()) =>
         {
-            todo!()
+            relate_var_to_rigid(env, var_id, RelationOp::InequalityOp(InequalityOp::SubtypeOp(subtype_op.invert())), rigid_name, parameters)
         }
         (
             Ty::RigidTy(RigidTy(rigid_name_1, parameters_1)),
