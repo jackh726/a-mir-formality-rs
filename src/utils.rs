@@ -43,8 +43,30 @@ pub fn reset(env_old: Env, var_ids: VarIds, env_new: Env) -> Env {
     )
 }
 
+pub fn fresh_vars_in_env(env: Env, names: impl IntoIterator<Item = impl Into<String>>) -> VarIds {
+    let mut var_idx = env.2.0.iter().map(|v| v.0.1).max().map(|max| max+1).unwrap_or(0);
+    VarIds(
+        names.into_iter().map(|name| VarId(name.into(), { let idx = var_idx; var_idx += 1; idx })).collect()
+    )
+}
+
+pub fn fresh_var_in_env(env: Env, name: impl Into<String>) -> VarId {
+    let mut var_idx = env.2.0.iter().map(|v| v.0.1).max().map(|max| max+1).unwrap_or(0);
+    VarId(name.into(), var_idx)
+}
+
 pub fn substitution_to_fresh_vars<T: Subst>(term: T, kinded_var_ids: KindedVarIds) -> VarIdPairs {
     todo!()
+}
+
+pub fn vars_to_fresh_vars_in_env(env: Env, kinded_var_ids: KindedVarIds) -> VarIdPairs {
+    let mut var_idx = env.2.0.iter().map(|v| v.0.1).max().map(|max| max+1).unwrap_or(0);
+    VarIdPairs(kinded_var_ids.0.into_iter().map(|kinded_var_id| {
+        let idx = var_idx;
+        var_idx += 1;
+        let new_var_id = VarId(kinded_var_id.1.0.clone(), idx);
+        VarIdPair(kinded_var_id.1, new_var_id)
+    }).collect())
 }
 
 pub fn env_with_incremented_universe(env: Env) -> Env {
@@ -56,7 +78,15 @@ pub fn env_with_vars_in_current_universe(
     quantifier: Quantifier,
     kinded_var_ids: KindedVarIds,
 ) -> Env {
-    todo!()
+    let Env(hook, universe, var_binders, substitution, var_inequalities, hypotheses) = env;
+    let new_var_binders =  VarBinders(kinded_var_ids.0.into_iter().map(|kinded_var_id| VarBinder(kinded_var_id.1, kinded_var_id.0, quantifier.clone(), universe.clone())).collect());
+    Env(
+        hook,
+        universe,
+        new_var_binders,
+        substitution,
+        var_inequalities, hypotheses,
+    )
 }
 
 pub fn env_with_hypotheses(env: Env, hypotheses: Hypotheses) -> Env {

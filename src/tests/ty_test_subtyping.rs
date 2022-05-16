@@ -13,26 +13,26 @@ pub fn test_subtyping() {
         Hypotheses(vec![
             Hypothesis::ForAll(
                 ty_grammar::KindedVarIds(vec![KindedVarId(
-                    Parameter::Ty(Ty::VarId(VarId("T".into()))),
-                    VarId("T".into()),
+                    ParameterKind::Ty,
+                    VarId("T".into(), 0),
                 )]),
                 Box::new(Hypothesis::AtomicGoal(AtomicGoal::Predicate(
                     ty_grammar::Predicate::WellFormed(
                         ty_grammar::ParameterKind::Ty,
-                        ty_grammar::Parameter::Ty(Ty::VarId(ty_grammar::VarId("T".into()))),
+                        ty_grammar::Parameter::Ty(Ty::VarId(ty_grammar::VarId("T".into(), 0))),
                     ),
                 ))),
             ),
             Hypothesis::ForAll(
                 ty_grammar::KindedVarIds(vec![KindedVarId(
-                    Parameter::Ty(Ty::VarId(VarId("T".into()))),
-                    VarId("T".into()),
+                    ParameterKind::Ty,
+                    VarId("T".into(), 1),
                 )]),
                 Box::new(Hypothesis::AtomicGoal(AtomicGoal::Predicate(
                     ty_grammar::Predicate::Implemented(TraitRef(
                         TraitId("AlwwaysImpl".into()),
                         ty_grammar::Parameters(vec![ty_grammar::Parameter::Ty(Ty::VarId(
-                            ty_grammar::VarId("T".into()),
+                            ty_grammar::VarId("T".into(), 1),
                         ))]),
                     )),
                 ))),
@@ -43,10 +43,10 @@ pub fn test_subtyping() {
     let goal: Goal = Goal::AtomicGoal(AtomicGoal::Relation(Relation(
         Parameter::Ty(Ty::PredicateTy(PredicateTy::ForAllTy(ForAllTy(
             ty_grammar::KindedVarIds(vec![ty_grammar::KindedVarId(
-                ty_grammar::Parameter::Ty(Ty::VarId(VarId("T".into()))),
-                VarId("T".into()),
+                ParameterKind::Ty,
+                VarId("T".into(), 2),
             )]),
-            Box::new(Ty::VarId(VarId("T".into()))),
+            Box::new(Ty::VarId(VarId("T".into(), 2))),
         )))),
         RelationOp::InequalityOp(InequalityOp::SubtypeOp(SubtypeOp::Subset)),
         Parameter::Ty(Ty::RigidTy(RigidTy(

@@ -150,25 +150,64 @@ impl Subst for Ty {
 
 impl Subst for Goal {
     fn subst(self, subst: Substitution) -> Self {
-        todo!()
+        match self {
+            Self::AtomicGoal(AtomicGoal::Predicate(predicate)) => Self::AtomicGoal(AtomicGoal::Predicate(predicate.subst(subst.clone()))),
+            Self::AtomicGoal(AtomicGoal::Relation(relation)) => Self::AtomicGoal(AtomicGoal::Relation(relation.subst(subst.clone()))),
+            Self::BuiltinGoal(BuiltinGoal::All(goals)) => Self::BuiltinGoal(BuiltinGoal::All(goals.subst(subst.clone()))),
+            Self::BuiltinGoal(BuiltinGoal::Any(goals)) => Self::BuiltinGoal(BuiltinGoal::Any(goals.subst(subst.clone()))),
+            Self::BuiltinGoal(BuiltinGoal::Implies(hypotheses, goal)) => Self::BuiltinGoal(BuiltinGoal::Implies(hypotheses.subst(subst.clone()), goal.subst(subst.clone()))),
+            Self::BuiltinGoal(BuiltinGoal::Quantified(quantifier, kinded_var_ids, goal)) => Self::BuiltinGoal(BuiltinGoal::Quantified(quantifier.subst(subst.clone()), kinded_var_ids.subst(subst.clone()), goal.subst(subst.clone()))),
+        }
     }
 }
 
-impl Subst for ProveStacks {
-    fn subst(self, subst: Substitution) -> Self {
-        todo!()
-    }
+macro_rules! todo_subst {
+    ($($id:ident), *) => {
+        $(
+            impl Subst for $id {
+                fn subst(self, subst: Substitution) -> Self {
+                    todo!()
+                }
+            }
+        )*
+    };
 }
 
-impl Subst for Env {
-    fn subst(self, subst: Substitution) -> Self {
-        todo!()
-    }
-}
+todo_subst!(Predicate);
+todo_subst!(Goals);
+todo_subst!(KindedVarIds);
+todo_subst!(Quantifier);
+todo_subst!(ProveStacks);
+todo_subst!(Env);
+todo_subst!(Hypotheses);
 
 impl Subst for Relation {
     fn subst(self, subst: Substitution) -> Self {
-        todo!()
+        Relation(self.0.subst(subst.clone()), self.1, self.2.subst(subst.clone()))
+    }
+}
+
+impl Subst for Parameter {
+    fn subst(self, subst: Substitution) -> Self {
+        match self {
+            Parameter::Ty(Ty::VarId(var_id)) => {
+                for (subst_var_id, new_parameter) in subst.0 {
+                    if var_id == subst_var_id {
+                        return new_parameter;
+                    }
+                }
+                Parameter::Ty(Ty::VarId(var_id))
+            }
+            Parameter::Lt(Lt::VarId(var_id)) => {
+                for (subst_var_id, new_parameter) in subst.0 {
+                    if var_id == subst_var_id {
+                        return new_parameter;
+                    }
+                }
+                Parameter::Lt(Lt::VarId(var_id))
+            }
+            p => p,
+        }
     }
 }
 
@@ -181,5 +220,11 @@ impl<T: Subst> Subst for Vec<T> {
 impl<T: Subst, U: Subst> Subst for (T, U) {
     fn subst(self, subst: Substitution) -> Self {
         (self.0.subst(subst.clone()), self.1.subst(subst))
+    }
+}
+
+impl<T: Subst> Subst for Box<T> {
+    fn subst(self, subst: Substitution) -> Self {
+        Box::new((*self).subst(subst))
     }
 }

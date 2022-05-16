@@ -10,10 +10,14 @@ pub fn instantiate_qualified<T: Clone + Subst>(
 ) -> (Env, T, VarIds) {
     match quantifier {
         Quantifier::ForAll => {
+            /*
+            // FIXME: use this instead
             let subst_to_placeholders = utils::substitution_to_fresh_vars(
                 (env_0.clone(), term_0.clone()),
                 kinded_var_ids.clone(),
             );
+            */
+            let subst_to_placeholders = utils::vars_to_fresh_vars_in_env(env_0.clone(), kinded_var_ids.clone());
             let varids_new = VarIds(
                 subst_to_placeholders
                     .0
@@ -48,10 +52,14 @@ pub fn instantiate_qualified<T: Clone + Subst>(
             (env_2, term_1, varids_new)
         }
         Quantifier::Exists => {
+            /*
+            // FIXME: use this instead
             let subst_to_inference = utils::substitution_to_fresh_vars(
                 (env_0.clone(), term_0.clone()),
                 kinded_var_ids.clone(),
             );
+            */
+            let subst_to_inference = utils::vars_to_fresh_vars_in_env(env_0.clone(), kinded_var_ids.clone());
             let varids_new = VarIds(
                 subst_to_inference
                     .0

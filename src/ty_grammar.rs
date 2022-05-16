@@ -160,12 +160,12 @@ pub struct AssociatedTyId(pub String);
 #[derive(Clone, PartialEq, Eq)]
 pub struct TyAliasId(pub String);
 #[derive(Clone, PartialEq, Eq)]
-pub struct VarId(pub String);
+pub struct VarId(pub String, pub usize); // Name, unique index
 
 #[derive(Clone, PartialEq, Eq)]
 pub struct KindedVarIds(pub Vec<KindedVarId>);
 #[derive(Clone, PartialEq, Eq)]
-pub struct KindedVarId(pub Parameter, pub VarId);
+pub struct KindedVarId(pub ParameterKind, pub VarId);
 
 pub struct Generics(GenericParameters, WhereClauses);
 pub struct GenericParameters(pub Vec<GenericParameter>);
